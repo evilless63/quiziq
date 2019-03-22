@@ -5,9 +5,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <h1>Команды</h1>
+                <h1>Ранги</h1>
 
-                <a href="{{ route('team.create') }}" class="btn btn-primary">Создать команду</a>
+                <a href="{{ route('rank.create') }}" class="btn btn-primary">Создать ранг</a>
             </div>
             <div class="col-md-12">
 
@@ -28,17 +28,18 @@
                     </div>
                 @endif
 
-                @foreach($teams as $team)
+                @foreach($ranks as $rank)
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">{{$team->name}}</h5>
-                            <form method="post" action="{{route('team.destroy', $team->id)}}">
+                            <h5 class="card-title">{{$rank->name}}</h5>
+                            <p class="card-text">{{$rank->min_score}}</p>
+                            <form method="post" action="{{route('rank.destroy', $rank->id)}}">
                                 @csrf
                                 @method('DELETE')
 
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
-                            <a href="{{route('team.edit', $team->id)}}" class="btn btn-primary">Редактировать</a>
+                            <a href="{{route('rank.edit', $rank->id)}}" class="btn btn-primary">Редактировать</a>
                         </div>
                     </div>
                 @endforeach

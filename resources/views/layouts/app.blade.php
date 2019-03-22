@@ -53,7 +53,7 @@
                                 <a class="nav-link active" href="{{ route('team.index') }}">Команды</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="{{ route('rank.index') }}">Ранги</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Link</a>

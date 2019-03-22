@@ -45,9 +45,12 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
         $team = Team::create($request->all());
         return redirect()->route('team.index');
-
     }
 
     /**
@@ -82,6 +85,10 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
         $input = $request->all();
         $team = Team::findOrFail($id);
         $team->update($input);
