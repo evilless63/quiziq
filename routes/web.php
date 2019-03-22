@@ -11,6 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Auth::routes(['register' => false, 'reset'=>false]);
+
+Route::group(['namespace' => 'admin', 'middleware' => 'auth'], function(){
+    Route::get('admin', 'AdminController@index');
+    Route::resource('team', 'TeamController');
+    Route::get('/', function(){
+       return Redirect::to('admin');
+    });
+
+
 });
