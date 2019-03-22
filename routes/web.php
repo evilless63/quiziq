@@ -18,6 +18,7 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth'], function(){
     Route::get('admin', 'AdminController@index');
     Route::resource('team', 'TeamController');
     Route::resource('rank', 'RankController');
+    Route::resource('game', 'RankController');
     Route::get('/', function(){
        return Redirect::to('admin');
     });

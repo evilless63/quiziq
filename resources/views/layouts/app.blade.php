@@ -56,7 +56,7 @@
                                 <a class="nav-link" href="{{ route('rank.index') }}">Ранги</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="{{ route('date.index') }}">Игры</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link disabled" href="#">Disabled</a>

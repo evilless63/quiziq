@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Rank;
+use Illuminate\Support\Facades\Storage;
 
 class RankController extends Controller
 {
@@ -54,10 +55,10 @@ class RankController extends Controller
         ]);
 
         if($request->hasFile('image_path')) {
-            $destinationPath = 'rank_images/';
+            $destinationPath = 'rank_images';
             $imageName = time().'.'.request()->image_path->getClientOriginalExtension();
-            request()->image_path->move($destinationPath, $imageName);
-            $filePath = $destinationPath.$imageName;
+            Storage::disk('local')->put($imageName, $destinationPath);
+            $filePath = Storage::url($imageName);
         }
 
         $rank = new Rank;
