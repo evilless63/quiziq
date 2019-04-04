@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 
 use App\Game;
+use App\Team;
 
 class GameController extends Controller
 {
@@ -35,7 +36,8 @@ class GameController extends Controller
      */
     public function create()
     {
-        return View('admin/game_create');
+        $teams = Team::all();
+        return View('admin/game_create')->with('teams', $teams);
     }
 
     /**
@@ -46,6 +48,7 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'name' => 'required',
             'date' => 'required',
@@ -53,6 +56,10 @@ class GameController extends Controller
         ]);
 
         $game = Game::create($request->all());
+
+        if($request->has('teams')){
+            $game->teams()->attach($request->teams);    
+        }
         return redirect()->route('game.index');
     }
 
@@ -76,7 +83,8 @@ class GameController extends Controller
     public function edit($id)
     {
         $game = Game::findOrFail($id);
-        return View('admin/game_edit')->with('game', $game);
+        $teams = Team::all();
+        return View('admin/game_edit')->with('game', $game)->with('teams', $teams);
     }
 
     /**
@@ -91,6 +99,13 @@ class GameController extends Controller
         $input = $request->all();
         $game = Game::findOrFail($id);
         $game->update($input);
+
+        $game->teams()->detach();
+
+        if($request->has('teams')){
+            $game->teams()->attach($request->teams);    
+        }
+
         return redirect()->route('game.index');
     }
 
@@ -102,7 +117,9 @@ class GameController extends Controller
      */
     public function destroy($id)
     {
-        $game = Game::findOrFail($id)->delete();
+        $game = Game::findOrFail($id);
+        $game->teams()->detach();
+        $game->delete();
         return redirect()->route('game.index');
     }
 }

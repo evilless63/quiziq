@@ -29,17 +29,23 @@
                 @endif
 
                 @foreach($ranks as $rank)
-                    <div class="card">
+                    <div class="card mt-2">
                         <div class="card-body">
                             <h5 class="card-title">{{$rank->name}}</h5>
-                            <p class="card-text">{{$rank->min_score}}</p>
-                            <form method="post" action="{{route('rank.destroy', $rank->id)}}">
-                                @csrf
-                                @method('DELETE')
+                            <p class="card-text">Минимум баллов для достижения: {{$rank->min_score}}</p>
+                            <div class="row">
+                                <div class="col">
+                                    <a href="{{route('rank.edit', $rank->id)}}" class="btn btn-primary">Редактировать</a>
+                                </div>
+                                <div class="col">
+                                    <form method="post" action="{{route('rank.destroy', $rank->id)}}">
+                                        @csrf
+                                        @method('DELETE')
 
-                                <button type="submit" class="btn btn-danger">Удалить</button>
-                            </form>
-                            <a href="{{route('rank.edit', $rank->id)}}" class="btn btn-primary">Редактировать</a>
+                                        <button type="submit" class="btn btn-danger">Удалить</button>
+                                    </form>   
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach

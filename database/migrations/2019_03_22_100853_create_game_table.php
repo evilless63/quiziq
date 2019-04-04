@@ -16,7 +16,7 @@ class CreateGameTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->string(name);
+            $table->string('name');
             $table->date('date');
             $table->integer('rounds');
         });
@@ -29,6 +29,6 @@ class CreateGameTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('game');
+        Schema::dropIfExists('games');
     }
 }

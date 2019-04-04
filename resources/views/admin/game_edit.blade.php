@@ -33,6 +33,18 @@
                                 <input type="text" class="form-control" name="rounds" value="{{ $game->rounds }}"/>
                             </div>
 
+                            <div class="form-group">
+                                @foreach($teams as $team)
+                                    <input type="checkbox" name="teams[]" value="{{$team->id}}"
+                                        @if($game->teams->where('id', $team->id)->count())
+                                            checked="checked"
+                                        @endif
+                                    >
+                                    <label>{{ucfirst($team->name)}}</label>
+                                    <br>
+                                @endforeach
+                            </div>
+
 
                             <button type="submit" class="btn btn-primary">Редактировать</button>
                         </form>

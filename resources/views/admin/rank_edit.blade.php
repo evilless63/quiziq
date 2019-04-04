@@ -15,7 +15,7 @@
 
                     Редактировать ранг:
 
-                    <form method="post" action="{{ route('rank.update', $rank->id) }}">
+                    <form method="post" action="{{ route('rank.update', $rank->id) }}" enctype="multipart/form-data">
                         <div class="form-group">
                             @csrf
                             @method('PATCH')
@@ -33,11 +33,13 @@
                             <input type="file" class="form-control" name="image_path"/>
                         </div>
 
+                        @if(isset($rank->image_path))
                         <div class="form-group">
                             <div class="text-center">
-                                <img src="{{ $rank->image_path}}" class="rounded" alt="{{ $rank->name }}">
+                                <img src="{{ asset('/storage/' .$rank->image_path)}}" class="rounded img-thumbnail float-left" alt="{{ $rank->name }}">
                             </div>
                         </div>
+                        @endif
 
                         <button type="submit" class="btn btn-primary">Редактировать</button>
                     </form>

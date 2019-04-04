@@ -32,6 +32,14 @@
                                 <input type="text" class="form-control" name="rounds"/>
                             </div>
 
+                            <div class="form-group">
+                                @foreach($teams as $team)
+                                    <input type="checkbox" name="teams[]" value="{{$team->id}}">
+                                    <label>{{ucfirst($team->name)}}</label>
+                                    <br>
+                                @endforeach
+                            </div>
+
                             <button type="submit" class="btn btn-primary">Создать</button>
                         </form>
 

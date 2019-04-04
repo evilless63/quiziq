@@ -29,6 +29,6 @@ class CreateRankTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rank');
+        Schema::dropIfExists('ranks');
     }
 }

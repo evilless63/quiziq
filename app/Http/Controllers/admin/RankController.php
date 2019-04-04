@@ -55,20 +55,24 @@ class RankController extends Controller
         ]);
 
         if($request->hasFile('image_path')) {
-            $destinationPath = 'rank_images';
-            $imageName = time().'.'.request()->image_path->getClientOriginalExtension();
-            Storage::disk('local')->put($imageName, $destinationPath);
-            $filePath = Storage::url($imageName);
+
+            $path = $request->file('image_path')->store('uploads', 'public');
+            // $destinationPath = 'rank_images';
+            // $imageName = time().'.'.request()->image_path->getClientOriginalExtension();
+            // Storage::disk('local')->put($imageName, $destinationPath);
+            // $filePath = Storage::url($imageName);
         }
 
         $rank = new Rank;
         $rank->name = $request->name;
         $rank->min_score = $request->min_score;
-        $rank->image_path = $filePath;
+        $rank->image_path = $path;
 
         $rank->save();
 
-        return redirect()->route('rank.index');
+        return View('admin/ranks', [
+            'ranks' => $this->ranks
+        ]);
     }
 
     /**
@@ -105,26 +109,25 @@ class RankController extends Controller
     {
 //        $this->validate($request, [
 //            'image_path' => 'required',
-//            'image_path.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+//            'image_path.w*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 //            'name' => 'required',
 //            'min_score' => 'required'
 //        ]);
 
-        $rank = Team::findOrFail($id);
+        $rank = Rank::findOrFail($id);
 
         if($request->hasFile('image_path')) {
-            $file = $request->file('image_path');
-            $destinationPath = '/rank_images/';
-            $file->move(public_path().$destinationPath,$file->getClientOriginalName());
-            $filePath = public_path().$destinationPath.$file->getClientOriginalName();
+            $path = $request->file('image_path')->store('uploads', 'public');
+            $rank->image_path = $path;
         }
 
         $rank->name = $request->name;
         $rank->min_score = $request->min_score;
-        $rank->image_path = $filePath;
 
         $rank->update();
-        return redirect()->route('rank.index');
+        return View('admin/ranks', [
+            'ranks' => $this->ranks
+        ]);
     }
 
     /**

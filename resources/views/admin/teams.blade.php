@@ -29,16 +29,22 @@
                 @endif
 
                 @foreach($teams as $team)
-                    <div class="card">
+                    <div class="card mt-2">
                         <div class="card-body">
                             <h5 class="card-title">{{$team->name}}</h5>
-                            <form method="post" action="{{route('team.destroy', $team->id)}}">
-                                @csrf
-                                @method('DELETE')
+                            <div class="row">
+                                <div class="col">
+                                    <a href="{{route('team.edit', $team->id)}}" class="btn btn-primary">Редактировать</a>
+                                </div>
+                                <div class="col">
+                                    <form method="post" action="{{route('team.destroy', $team->id)}}">
+                                        @csrf
+                                        @method('DELETE')
 
-                                <button type="submit" class="btn btn-danger">Удалить</button>
-                            </form>
-                            <a href="{{route('team.edit', $team->id)}}" class="btn btn-primary">Редактировать</a>
+                                        <button type="submit" class="btn btn-danger">Удалить</button>
+                                    </form> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach
