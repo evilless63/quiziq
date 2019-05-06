@@ -42,6 +42,10 @@
                                 <div class="col">
                                     <a href="{{route('game.edit', $game->id)}}" class="btn btn-primary">Редактировать</a>
                                 </div>
+                                <!-- TODO - Если игра закончена (булево поле в БД - скрываем возможность управлять игрой) -->
+                                <div class="col">
+                                    <a href="{{route('manage_game', $game->id)}}" class="btn btn-primary">Управление игрой</a>
+                                </div>
                                 <div class="col">
                                     <form method="post" action="{{route('game.destroy', $game->id)}}">
                                         @csrf

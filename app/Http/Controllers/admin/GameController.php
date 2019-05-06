@@ -87,6 +87,16 @@ class GameController extends Controller
         return View('admin/game_edit')->with('game', $game)->with('teams', $teams);
     }
 
+    public function manageGame($id) {
+        $game = Game::findOrFail($id);
+        return View('admin/game_manage')->with('game', $game);
+    }
+
+    public function showClientGame($id) {
+        $game = Game::findOrFail($id);
+        return View('admin/game_client')->with('game', $game);
+    }
+
     /**
      * Update the specified resource in storage.
      *

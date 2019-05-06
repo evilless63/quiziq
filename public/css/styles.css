@@ -1,0 +1,115 @@
+@font-face {
+    font-family: 'MullerBold';
+    src: local('Muller Bold'), local('Muller-Bold'),
+        url('/fonts/MullerBold.woff2') format('woff2'),
+        url('/fonts/MullerBold.woff') format('woff'),
+        url('/fonts/MullerBold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+ 
+  @font-face {
+    font-family: 'MullerLight';
+    src: local('Muller Light'), local('Muller-Light'),
+        url('/fonts/MullerLight.woff2') format('woff2'),
+        url('/fonts/MullerLight.woff') format('woff'),
+        url('/fonts/MullerLight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+.round_text_background {
+    background: rgb(58, 157, 192);
+    background: linear-gradient(90deg, rgba(58, 157, 192, 1) 0%, rgba(108, 185, 128, 1) 100%);
+    border-radius: 7px;
+    padding: 0.2rem 0.75rem;
+    font-size: 2.3rem;
+    font-family: MullerLight;
+    text-transform: uppercase;
+}
+
+.table-borderless {
+    text-align: center;
+    color: #fff;
+}
+
+thead {
+    background: #4c4680;
+}
+
+thead th {
+    text-align: center;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.table td {
+    vertical-align: middle !important;
+}
+
+.table thead th {
+    vertical-align: middle;  
+}
+
+td.color_rgba:nth-child(2n) {
+    background: rgba(255, 255, 255, 0.021);
+}
+
+.th_result {
+    background: rgb(88, 173, 205);
+    background: linear-gradient(90deg, rgba(88, 173, 205, 1) 0%, rgba(13, 84, 181, 1) 100%);
+    border-radius: 7px;
+    padding: 0.2rem 0.75rem;
+    font-size: 2.3rem;
+    font-family: MullerLight;
+    text-transform: uppercase;
+}
+
+
+.td_result {
+    color: #4c4680;
+    background: rgb(255, 255, 255);
+    border-radius: 7px;
+    padding: 0.2rem 0.75rem;
+}
+
+.th_header {
+    font-family: MullerBold;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+}
+
+.game_number {
+    font-family: MullerBold;
+    font-size: 3rem;
+    text-transform: uppercase;
+}
+
+.command_name {
+    font-family: MullerBold;
+    font-size: 2rem; 
+}
+
+.color_rgba, .color_rgba_result {
+    font-family: MullerBold;
+    font-size: 3rem; 
+}
+
+/* tr:hover {
+    background-image: linear-gradient(to left, #4e4e85 25%, #155db7 100%);
+    background-origin: border-box;
+
+} */
+
+.tr_hover {
+    background-image: linear-gradient(to left, #4e4e85 25%, #155db7 100%);
+    background-origin: border-box;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+body {
+     cursor: none; 
+}
