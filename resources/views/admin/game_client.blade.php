@@ -5,8 +5,9 @@
     <table class="table table-borderless">
         <thead>
             <tr>
-                <th scope="col" class="th_header">Место</th>
-                <th scope="col" class="th_header">Команда</th>
+                <th scope="col" class="th_header">V</th>
+                <th scope="col" class="th_header">H</th>
+                <th scope="col" class="th_header">Команда</th>             
                 <!-- Раунды -->
                 @for ($round = 1; $round <= $game->rounds; $round++)
                     <th scope="col round" class=""> <span class="round_text_background">{{$round}}</span> </th>
@@ -19,7 +20,8 @@
             @foreach($game->totalscores()->orderBy('totalscore', 'desc')->get() as $key=>$totalscore)
             <tr tabindex="{{count($game->teams()->get()->toArray()) - ($key + 1)}}">
                 <td class="game_number">{{$key + 1}}</td>
-                <td class="command_name">{{$game->teams->where('id', $totalscore->team_id)->first()->name}}</td>
+                <td><img src="{{ asset('/storage/' .$game->teams->where('id', $totalscore->team_id)->first()->ranks()->first()->image_path)}}" class="rounded" alt=""></td>
+                <td class="command_name resizeble-font">{{$game->teams->where('id', $totalscore->team_id)->first()->name}}</td>               
                 @foreach($game->rounds()->get() as $k=>$round)
                     @if($round->team_id == $game->teams->where('id', $totalscore->team_id)->first()->id)
                     <td class="color_rgba">{{$round->score}}</td>
