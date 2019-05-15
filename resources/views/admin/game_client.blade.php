@@ -16,14 +16,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($game->teams()->get() as $key=>$team)
+            @foreach($game->totalscores()->orderBy('totalscore', 'desc')->get() as $key=>$totalscore)
             <tr tabindex="{{count($game->teams()->get()->toArray()) - ($key + 1)}}">
-                <td class="game_number">1</td>
-                <td class="command_name">{{$team->name}}</td>
-                @for ($round = 1; $round <= $game->rounds; $round++)
-                    <td class="color_rgba"> 11 </td>
-                @endfor
-                <td class="color_rgba_result"> <span class="td_result">36</span> </td>
+                <td class="game_number">{{$key + 1}}</td>
+                <td class="command_name">{{$game->teams->where('id', $totalscore->team_id)->first()->name}}</td>
+                @foreach($game->rounds()->get() as $k=>$round)
+                    @if($round->team_id == $game->teams->where('id', $totalscore->team_id)->first()->id)
+                    <td class="color_rgba">{{$round->score}}</td>
+                    @endif
+                @endforeach
+                <td class="color_rgba_result"> <span class="td_result">{{$totalscore->totalscore}}</span> </td>
             </tr>
             @endforeach
         </tbody>

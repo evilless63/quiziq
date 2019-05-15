@@ -88,5 +88,7 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="{{ asset('js/backend_script.js') }}" defer></script>
 </body>
 </html>

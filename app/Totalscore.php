@@ -4,16 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Team extends Model
+class Totalscore extends Model
 {
-    protected $fillable = ['id','name'];
-
     public function games(){
         return $this->belongsToMany('App\Game');
     }
 
-    public function totalscores(){
-        return $this->belongsToMany('App\Totalscore');
+    public function teams(){
+        return $this->belongsToMany('App\Team');
     }
-
 }

@@ -34,6 +34,14 @@
                             <h5 class="card-title">{{$team->name}}</h5>
                             <div class="row">
                                 <div class="col">
+                                    Общее количество баллов: 
+                                    <strong>
+                                        
+                                       {{$team->totalscores()->sum('totalscore') }}
+                                       
+                                    </strong>
+                                </div>
+                                <div class="col">
                                     <a href="{{route('team.edit', $team->id)}}" class="btn btn-primary">Редактировать</a>
                                 </div>
                                 <div class="col">

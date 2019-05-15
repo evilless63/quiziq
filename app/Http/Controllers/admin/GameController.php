@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 
 use App\Game;
 use App\Team;
+use App\Round;
+use App\Totalscore;
 
 class GameController extends Controller
 {
@@ -60,6 +62,27 @@ class GameController extends Controller
         if($request->has('teams')){
             $game->teams()->attach($request->teams);    
         }
+
+        foreach($request->teams as $team){
+            for($round = 1; $round <= $request->rounds; $round++){
+                $round_obj = new Round;
+                $round_obj->team_id = $team;
+                $round_obj->score = 0;
+                $round_obj->save();
+                $game->rounds()->attach($round_obj);      
+            };
+
+            $totalscore = new Totalscore;
+            $totalscore->team_id = $team;
+            $totalscore->game_id = $game->id;
+            $totalscore->totalscore = 0;
+            $totalscore->save();
+
+            $totalscore->teams()->attach($team);
+            $game->totalscores()->attach($totalscore);
+        };
+        
+
         return redirect()->route('game.index');
     }
 
@@ -104,9 +127,61 @@ class GameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function ajaxRequestUpdateGame(Request $request)
+    {
+        $request_data = json_decode($request->request_data, true);
+        $gameId = $request->game_id;
+        $current_game = Game::findOrFail($gameId);
+        
+        foreach($request_data as $request) {
+
+            
+
+            $round = $current_game->rounds()->get();
+            $round = $round->where('id', $request['round_id'])
+            ->where('team_id', $request['team_id'])->first();
+
+            $round->score = $request['score'];
+            $round->update();    
+
+        }
+
+        foreach($request_data as $request) {
+
+            $round = $current_game->rounds()->get();
+            $rounds = $round->where('team_id', $request['team_id']);
+
+            $total_score = 0;
+            foreach($rounds as $r){
+                $total_score = $total_score + $r->score;
+            }
+             
+            $totalscores = $current_game->totalscores()->get();
+            $totalscore = $totalscores->where('team_id', $request['team_id'])->first();
+            $totalscore->totalscore = $total_score;
+            $totalscore->update();
+            // return response()->json(['success'=> $totalscore]);
+            
+            // ->where('id', $request['round_id'])
+            // ->where('team_id', $request['team_id'])
+            // ->first();
+
+            // return response()->json(['success'=>$round]); 
+
+            // $round->score = $request['score'];
+            // $round->update();    
+
+        }
+
+        return response()->json(['success'=> $request_data]);  
+    }
+     
     public function update(Request $request, $id)
     {
         $input = $request->all();
+
+        dd($request);
         $game = Game::findOrFail($id);
         $game->update($input);
 
@@ -129,6 +204,7 @@ class GameController extends Controller
     {
         $game = Game::findOrFail($id);
         $game->teams()->detach();
+        $game->rounds()->detach();
         $game->delete();
         return redirect()->route('game.index');
     }

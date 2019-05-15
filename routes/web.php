@@ -19,6 +19,9 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth'], function(){
     Route::resource('team', 'TeamController');
     Route::resource('rank', 'RankController');
     Route::resource('game', 'GameController');
+
+    Route::post('ajaxRequestUpdateGame', 'GameController@ajaxRequestUpdateGame');
+
     Route::get('manage_game/{id}', 'GameController@manageGame')->name('manage_game');
     Route::get('show_game_client/{id}', 'GameController@showClientGame')->name('show_game_client');
     Route::get('/', function(){

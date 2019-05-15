@@ -11,4 +11,17 @@ class Game extends Model
     public function teams(){
         return $this->belongsToMany('App\Team');
     }
+
+    public function rounds(){
+        return $this->belongsToMany('App\Round');
+    }
+
+    public function totalscores(){
+        return $this->belongsToMany('App\Totalscore');
+    }
+
+    public function totalscore_teams()
+    {
+        return $this->hasManyThrough('App\Team', 'App\Totalscore');
+    }
 }

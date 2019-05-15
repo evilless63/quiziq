@@ -23,7 +23,7 @@ background: linear-gradient(90deg, rgba(42,69,126,1) 0%, rgba(76,70,128,1) 100%)
 </head>
 <body style="background-color: transparent;">
     <div id="app">
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
     </div>
