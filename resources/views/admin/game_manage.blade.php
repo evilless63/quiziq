@@ -47,7 +47,7 @@
                                     @foreach($game->totalscores()->orderBy('totalscore', 'desc')->get() as $key=>$totalscore)
                                     <tr tabindex="{{count($game->teams()->get()->toArray()) - ($key + 1)}}">
                                         <td class="game_number">{{$key + 1}}</td>
-                                        <td class="command_name">{{$game->teams->where('id', $totalscore->team_id)->first()->name}}</td>
+                                        <td final_team_id="{{$game->teams->where('id', $totalscore->team_id)->first()->id}}" class="command_name final_team_id">{{$game->teams->where('id', $totalscore->team_id)->first()->name}}</td>
                                         @foreach($game->rounds()->get() as $k=>$round)
                                             @if($round->team_id == $game->teams->where('id', $totalscore->team_id)->first()->id)
                                             <td request='true' class="color_rgba">
@@ -64,6 +64,7 @@
                             </table>
 
                             <button type="submit" class="btn btn-primary" id="update_game">Сохранить состояние игры</button>
+                            <button type="submit" class="btn btn-primary" id="end_game">Завершить игру</button>
                             <a href="{{route('show_game_client', $game->id)}}" class="btn btn-primary">Клиентская часть</a>
                         </form>
 

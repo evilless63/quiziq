@@ -16,4 +16,8 @@ class Team extends Model
         return $this->belongsToMany('App\Totalscore');
     }
 
+    public function ranks(){
+        return $this->belongsToMany('App\Rank');
+    }
+
 }

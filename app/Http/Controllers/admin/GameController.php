@@ -10,6 +10,7 @@ use App\Game;
 use App\Team;
 use App\Round;
 use App\Totalscore;
+use App\Rank;
 
 class GameController extends Controller
 {
@@ -176,12 +177,44 @@ class GameController extends Controller
 
         return response()->json(['success'=> $request_data]);  
     }
+
+    public function ajaxRequestFinalizeGame(Request $request){
+        //Team, TotalScore
+        $request_data = json_decode($request->request_data, true);
+        
+        foreach($request_data as $request){
+            $team = Team::findOrFail($request['team_id']);
+             
+            $team_wholescore = $team->totalscores()->sum('totalscore');
+            $team_wholescore = (int)$team_wholescore;
+
+            
+            
+            $team->ranks()->detach();
+            $ranks = Rank::orderBy('min_score', 'desc')->get();
+            
+            foreach($ranks as $rank){
+                // return response()->json(['success'=> $team_wholescore >= $rank->min_score]);
+                if($team_wholescore >= $rank->min_score){
+                    $team->ranks()->attach($rank);
+                    break;    
+                }
+            }
+
+            // return response()->json(['success'=> $ranks]);
+            return response()->json(['success'=> 'Игра завершена, ранги команд обновлены']);
+
+            // $rank = Rank::where('min_score','<=',$team_wholescore)->orderBy('asc')->first();
+            // $team->attach($rank);
+        }
+
+        return response()->json(['success'=> $request_data]);  
+    }
      
     public function update(Request $request, $id)
     {
         $input = $request->all();
 
-        dd($request);
         $game = Game::findOrFail($id);
         $game->update($input);
 

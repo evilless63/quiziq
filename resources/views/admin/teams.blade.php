@@ -39,6 +39,14 @@
                                         
                                        {{$team->totalscores()->sum('totalscore') }}
                                        
+                                    </strong><br>
+                                    Ранг команды: 
+                                    <strong>
+                                        @if($team->ranks()->first() <> null)
+                                            {{$team->ranks()->firstOrFail()->name}}
+                                        @else
+                                            Новичок
+                                        @endif
                                     </strong>
                                 </div>
                                 <div class="col">
