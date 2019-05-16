@@ -20,7 +20,9 @@
             @foreach($game->totalscores()->orderBy('totalscore', 'desc')->get() as $key=>$totalscore)
             <tr tabindex="{{count($game->teams()->get()->toArray()) - ($key + 1)}}">
                 <td class="game_number">{{$key + 1}}</td>
+                @if(isset($game->teams->where('id', $totalscore->team_id)->first()->ranks()->first()->image_path))
                 <td><img src="{{ asset('/storage/' .$game->teams->where('id', $totalscore->team_id)->first()->ranks()->first()->image_path)}}" class="rounded" alt=""></td>
+                @endif
                 <td class="command_name resizeble-font">{{$game->teams->where('id', $totalscore->team_id)->first()->name}}</td>               
                 @foreach($game->rounds()->get() as $k=>$round)
                     @if($round->team_id == $game->teams->where('id', $totalscore->team_id)->first()->id)

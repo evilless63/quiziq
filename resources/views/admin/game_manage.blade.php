@@ -64,8 +64,8 @@
                             </table>
 
                             <button type="submit" class="btn btn-primary" id="update_game">Сохранить состояние игры</button>
-                            <button type="submit" class="btn btn-primary" id="end_game">Завершить игру</button>
-                            <a href="{{route('show_game_client', $game->id)}}" class="btn btn-primary">Клиентская часть</a>
+                            <a href="{{route('show_game_client', $game->id)}}" class="btn btn-success">Клиентская часть</a>
+                            <button type="submit" class="btn btn-danger" id="end_game">Завершить игру</button>                            
                         </form>
 
                     </div>

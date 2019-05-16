@@ -47,7 +47,7 @@ $(document).ready(function () {
                 game_id: $('#game_id').attr('game_id')
             },
             success: function (data) {
-              console.log(data.success);
+                // console.log(data.success);
                 alert(data.success);
                 location.reload();
             }

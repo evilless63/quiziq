@@ -7,7 +7,16 @@
             <div class="col-md-12">
                 <h1>Ранги</h1>
 
+                
+            </div>
+            <div class="col">
                 <a href="{{ route('rank.create') }}" class="btn btn-primary">Создать ранг</a>
+            </div>
+            <div class="col">
+            <form method="post" action="{{route('rankteamupdate')}}">
+                    @csrf
+                    <button type="submit" class="btn btn-success">Обновить ранги команд</button>
+                </form>
             </div>
             <div class="col-md-12">
 

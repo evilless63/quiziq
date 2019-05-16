@@ -17,6 +17,8 @@ class CreateGameTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('name');
+            $table->boolean('go_on')->default(false);
+            $table->string('comment')->default('');
             $table->date('date');
             $table->integer('rounds');
         });

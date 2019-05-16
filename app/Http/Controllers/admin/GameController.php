@@ -116,9 +116,23 @@ class GameController extends Controller
         return View('admin/game_manage')->with('game', $game);
     }
 
+    public function startGame($id) {
+        $game = Game::findOrFail($id);
+        $game->go_on = true;
+        $game->save();
+        return View('admin/game_manage')->with('game', $game);
+    }
+
     public function showClientGame($id) {
         $game = Game::findOrFail($id);
         return View('admin/game_client')->with('game', $game);
+    }
+
+    public function addCommentGame(Request $request, $id){
+        $game = Game::findOrFail($id);
+        $game->comment = $request->comment;
+        $game->save();
+        return redirect()->route('game.index');
     }
 
     /**
@@ -180,8 +194,11 @@ class GameController extends Controller
 
     public function ajaxRequestFinalizeGame(Request $request){
         //Team, TotalScore
-        $request_data = json_decode($request->request_data, true);
-        
+        $request_data = json_decode($request->request_data, true);   
+        $gameId = $request->game_id;
+        $current_game = Game::findOrFail($gameId);
+        $current_game->is_over = true;
+        $current_game->save();
         foreach($request_data as $request){
             $team = Team::findOrFail($request['team_id']);
              
@@ -238,6 +255,7 @@ class GameController extends Controller
         $game = Game::findOrFail($id);
         $game->teams()->detach();
         $game->rounds()->detach();
+        $game->totalscores()->detach();
         $game->delete();
         return redirect()->route('game.index');
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Rank;
+use App\Team;
 use Illuminate\Support\Facades\Storage;
 
 class RankController extends Controller
@@ -70,9 +71,7 @@ class RankController extends Controller
 
         $rank->save();
 
-        return View('admin/ranks', [
-            'ranks' => $this->ranks
-        ]);
+        return redirect()->route('rank.index');
     }
 
     /**
@@ -125,9 +124,7 @@ class RankController extends Controller
         $rank->min_score = $request->min_score;
 
         $rank->update();
-        return View('admin/ranks', [
-            'ranks' => $this->ranks
-        ]);
+        return redirect()->route('rank.index');
     }
 
     /**
@@ -139,6 +136,30 @@ class RankController extends Controller
     public function destroy($id)
     {
         $rank = Rank::findOrFail($id)->delete();
+        return redirect()->route('rank.index');
+    }
+
+    public function rankteamupdate()
+    {
+        $teams = Team::all();
+        $ranks = Rank::orderBy('min_score', 'desc')->get();
+        foreach($teams as $team){
+            $team_wholescore = $team->totalscores()->sum('totalscore');
+            
+            $team_wholescore = (int)$team_wholescore;
+            
+            $team->ranks()->detach();
+
+            foreach($ranks as $rank){
+                // return response()->json(['success'=> $team_wholescore >= $rank->min_score]);
+                if($team_wholescore >= $rank->min_score){
+                    
+                    $team->ranks()->attach($rank);
+                    break;    
+                }
+            }
+        }
+
         return redirect()->route('rank.index');
     }
 }
