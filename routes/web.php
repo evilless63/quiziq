@@ -38,5 +38,6 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth'], function(){
 
 
 });
-
+Route::group(['namespace' => 'admin'], function(){
 Route::get('show_game_client/{id}', 'GameController@showClientGame')->name('show_game_client');
+});

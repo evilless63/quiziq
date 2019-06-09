@@ -5,8 +5,8 @@
     <table class="table table-borderless">
         <thead>
             <tr>
-                <th scope="col" class="th_header">V</th>
-                <th scope="col" class="th_header">H</th>
+                <th scope="col" class="th_header">М</th>
+                <th scope="col" class="th_header">Р</th>
                 <th scope="col" class="th_header">Команда</th>             
                 <!-- Раунды -->
                 @for ($round = 1; $round <= $game->rounds; $round++)
@@ -22,6 +22,8 @@
                 <td class="game_number">{{$key + 1}}</td>
                 @if(isset($game->teams->where('id', $totalscore->team_id)->first()->ranks()->first()->image_path))
                 <td><img src="{{ asset('/storage/' .$game->teams->where('id', $totalscore->team_id)->first()->ranks()->first()->image_path)}}" class="rounded" alt=""></td>
+                @else
+                <td>--</td>
                 @endif
                 <td class="command_name resizeble-font">{{$game->teams->where('id', $totalscore->team_id)->first()->name}}</td>               
                 @foreach($game->rounds()->get() as $k=>$round)
