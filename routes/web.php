@@ -31,10 +31,12 @@ Route::group(['namespace' => 'admin', 'middleware' => 'auth'], function(){
     Route::get('start_game/{id}', 'GameController@startGame')->name('start_game');
     Route::post('add_comment_game/{id}', 'GameController@addCommentGame')->name('add_comment_game');
     
-    Route::get('show_game_client/{id}', 'GameController@showClientGame')->name('show_game_client');
+    
     Route::get('/', function(){
        return Redirect::to('admin');
     });
 
 
 });
+
+Route::get('show_game_client/{id}', 'GameController@showClientGame')->name('show_game_client');
