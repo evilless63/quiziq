@@ -21,7 +21,7 @@ class RankController extends Controller
 
     public function __construct()
     {
-        $this->ranks = Rank::all();
+        $this->ranks = Rank::orderBy('created_at', 'desc')->get();
     }
 
     public function index()

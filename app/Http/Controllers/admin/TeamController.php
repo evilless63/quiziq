@@ -19,7 +19,7 @@ class TeamController extends Controller
 
     public function __construct()
     {
-        $this->teams = Team::all();
+        $this->teams = Team::orderBy('created_at', 'desc')->get();
     }
 
     public function index()
