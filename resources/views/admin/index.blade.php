@@ -16,7 +16,7 @@
 
 
 
-                        You are logged in QUIZIQ admin!
+                        Вы находитесь в панели управления  QuizIq !
                     </div>
                 </div>
             </div>

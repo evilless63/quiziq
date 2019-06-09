@@ -8,7 +8,7 @@ background: linear-gradient(90deg, rgba(42,69,126,1) 0%, rgba(76,70,128,1) 100%)
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Quiz-iq') }}</title>
+    <title>Quiz-iq</title>
 
     <!-- Scripts -->
     <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->

@@ -79,6 +79,10 @@ td.color_rgba:nth-child(2n) {
     text-transform: uppercase;
 }
 
+.tr_display_none {
+    display: none;
+}
+
 .game_number {
     font-family: MullerBold;
     font-size: 3rem;

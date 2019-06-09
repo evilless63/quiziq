@@ -28,8 +28,11 @@
                     </div>
                 @endif
 
+                <input type="text" id="searchTeamsBlade" class="form-control mt-4" placeholder="Поиск команды">
+               
+                <div id="searchForm">
                 @foreach($teams as $team)
-                    <div class="card mt-2">
+                    <div class="card mt-2 searchClassTeam">
                         <div class="card-body">
                             <h5 class="card-title">{{$team->name}}</h5>
                             <div class="row">
@@ -64,6 +67,7 @@
                         </div>
                     </div>
                 @endforeach
+                </div>
             </div>
         </div>
     </div>
