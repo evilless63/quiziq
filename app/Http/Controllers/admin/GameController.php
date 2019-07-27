@@ -69,6 +69,7 @@ class GameController extends Controller
                 $round_obj = new Round;
                 $round_obj->team_id = $team;
                 $round_obj->score = 0;
+                $round_obj->number = $round;
                 $round_obj->save();
                 $game->rounds()->attach($round_obj);      
             };
@@ -77,6 +78,8 @@ class GameController extends Controller
             $totalscore->team_id = $team;
             $totalscore->game_id = $game->id;
             $totalscore->totalscore = 0;
+            //Доработка логики вывода, если у нас в общем счете есть одинаковые значения, ориентируетмся на предыдущий раунд
+            $totalscore->last_round_score = 0;
             $totalscore->save();
 
             $totalscore->teams()->attach($team);
@@ -151,8 +154,6 @@ class GameController extends Controller
         
         foreach($request_data as $request) {
 
-            
-
             $round = $current_game->rounds()->get();
             $round = $round->where('id', $request['round_id'])
             ->where('team_id', $request['team_id'])->first();
@@ -168,13 +169,30 @@ class GameController extends Controller
             $rounds = $round->where('team_id', $request['team_id']);
 
             $total_score = 0;
+            $arr = array();
+            $r_n = 1;
             foreach($rounds as $r){
-                $total_score = $total_score + $r->score;
+                $total_score = $total_score + $r->score; 
+                $i['round_sco'] = $r->score;
+                $i['round_num'] = $r->number;
+
+                array_push($arr, $i);
+
+                $r_n = $r_n + 1;
             }
-             
+            
             $totalscores = $current_game->totalscores()->get();
             $totalscore = $totalscores->where('team_id', $request['team_id'])->first();
             $totalscore->totalscore = $total_score;
+
+            //Доработка логики вывода, если у нас в общем счете есть одинаковые значения, ориентируетмся на предыдущий раунд
+            $last_round_score = 0;
+            if($request['max_round'] > 1) {
+                $last_round_score = $arr[$request['max_round']-1]['round_sco'];
+            } 
+           
+            $totalscore->last_round_score = $last_round_score;
+            
             $totalscore->update();
             // return response()->json(['success'=> $totalscore]);
             

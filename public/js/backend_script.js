@@ -62,12 +62,28 @@ $(document).ready(function () {
         // $('[request=true]').find("input").each(function () {
         //   console.log(this.value);
         // });
+        var max_round = 1;
+        $('[request=true]').each(function (index) {
+
+            var score = $(this).find("input").val();
+            var round_number = $(this).find("input").attr('round_number');
+
+            if(score > 0) {
+                if(max_round < round_number) {
+                    max_round = round_number;
+                }
+            }
+
+        });
+
         $('[request=true]').each(function (index) {
 
             data = {};
             data.team_id = $(this).find("input").attr('team_id');
             data.round_id = $(this).find("input").attr('round_id');
             data.score = $(this).find("input").val();
+            data.round_number = $(this).find("input").attr('round_number');
+            data.max_round = max_round;
 
             array_data.push(data);
 
@@ -86,8 +102,8 @@ $(document).ready(function () {
                 game_id: $('#game_id').attr('game_id')
             },
             success: function (data) {
-                // console.log(data.success);
-                location.reload();
+                console.log(data);
+                // location.reload();
             }
         });
     });

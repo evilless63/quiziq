@@ -44,15 +44,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($game->totalscores()->orderBy('totalscore', 'desc')->get() as $key=>$totalscore)
+                                    @foreach($game->totalscores()->orderBy('totalscore', 'desc')->orderBy('last_round_score', 'desc')->get() as $key=>$totalscore)
                                     <tr tabindex="{{count($game->teams()->get()->toArray()) - ($key + 1)}}">
                                         <td class="game_number">{{$key + 1}}</td>
                                         <td final_team_id="{{$game->teams->where('id', $totalscore->team_id)->first()->id}}" class="command_name final_team_id">{{$game->teams->where('id', $totalscore->team_id)->first()->name}}</td>
+                                        @php ($round_number = 0)
                                         @foreach($game->rounds()->get() as $k=>$round)
                                             @if($round->team_id == $game->teams->where('id', $totalscore->team_id)->first()->id)
+                                            @php ($round_number = $round_number + 1)
                                             <td request='true' class="color_rgba">
-                                                <input type="text" class="form-control" team_id="{{$game->teams->where('id', $totalscore->team_id)->first()->id}}" round_id="{{$round->id}}" name="round_{{$round->id}}_team_{{$game->teams->where('id', $totalscore->team_id)->first()->id}}" value="{{ $round->score }}"/> 
-                                                <input type="hidden" class="form-control" team_id="{{$game->teams->where('id', $totalscore->team_id)->first()->id}}" round_id="{{$round->id}}" name="round_{{$round->id}}_team_{{$game->teams->where('id', $totalscore->team_id)->first()->id}}" value="0"/>
+                                                <input type="text" class="form-control" team_id="{{$game->teams->where('id', $totalscore->team_id)->first()->id}}" round_id="{{$round->id}}" name="round_{{$round->id}}_team_{{$game->teams->where('id', $totalscore->team_id)->first()->id}}" round_number = "{{$round->number}}" value="{{ $round->score }}"/> 
+                                                <input type="hidden" class="form-control" team_id="{{$game->teams->where('id', $totalscore->team_id)->first()->id}}" round_id="{{$round->id}}" name="round_{{$round->id}}_team_{{$game->teams->where('id', $totalscore->team_id)->first()->id}}"  value="0"/>
                                             </td>
                                             @endif
                                         @endforeach

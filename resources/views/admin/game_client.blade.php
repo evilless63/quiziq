@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($game->totalscores()->orderBy('totalscore', 'desc')->get() as $key=>$totalscore)
+            @foreach($game->totalscores()->orderBy('totalscore', 'desc')->orderBy('last_round_score', 'desc')->get() as $key=>$totalscore)
             <tr @if( $game->is_over) @else style="display: none" @endif tabindex="{{count($game->teams()->get()->toArray()) - ($key + 1)}}">
                 <td class="game_number">{{$key + 1}}</td>
                 @if(isset($game->teams->where('id', $totalscore->team_id)->first()->ranks()->first()->image_path))
