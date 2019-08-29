@@ -151,6 +151,9 @@ class GameController extends Controller
         $request_data = json_decode($request->request_data, true);
         $gameId = $request->game_id;
         $current_game = Game::findOrFail($gameId);
+
+        $current_game->use_alter_range = $request->addCustomRange;
+        $current_game->save();
         
         foreach($request_data as $request) {
 
@@ -186,12 +189,12 @@ class GameController extends Controller
             $totalscore->totalscore = $total_score;
 
             //Доработка логики вывода, если у нас в общем счете есть одинаковые значения, ориентируетмся на предыдущий раунд
-            $last_round_score = 0;
-            if($request['max_round'] > 1) {
-                $last_round_score = $arr[$request['max_round']-1]['round_sco'];
-            } 
-           
-            $totalscore->last_round_score = $last_round_score;
+            // $last_round_score = 0;
+            // if($request['max_round'] > 1) {
+            //     $last_round_score = $arr[$request['max_round']-1]['round_sco'];
+            // } 
+
+            $totalscore->current_game_position = $request['current_game_position'];
             
             $totalscore->update();
             // return response()->json(['success'=> $totalscore]);
